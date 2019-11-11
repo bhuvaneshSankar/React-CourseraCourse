@@ -1,11 +1,23 @@
-import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+import React, {Component} from 'react';
+import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+
 class Navigationbar extends Component {
     constructor(props) {
         super(props);
-        console.log(`constructor - Navbar`);
-    }
-    getDerivedStateFromProps() {
+    
+        this.toggleNav = this.toggleNav.bind(this);
+        this.state = {
+          isNavOpen: false
+        };
+      }
+
+      toggleNav() {
+        this.setState({
+          isNavOpen: !this.state.isNavOpen
+        });
+      }
+  /*   getDerivedStateFromProps() {
         console.log(`getDerivedStateFromProps() - Navbar`);
     }
     componentDidMount() {
@@ -19,14 +31,31 @@ class Navigationbar extends Component {
     }
     componentDidUpdate() {
         console.log('componentDidUpdate - Nav');
-    }
+    }*/
     render() {
         console.log(`render - Nav`);
         return (
             <div>
-                <Navbar dark color="primary">
+                <Navbar dark expand="md">
                     <div className="container">
-                        <NavbarBrand href="/">{this.props.name}</NavbarBrand>
+                        <NavbarToggler onClick={this.toggleNav} />
+                        <NavbarBrand className="mr-auto" href="/"><img src='assets/images/logo.png' height="30" width="41" alt='Ristorante Con Fusion' /></NavbarBrand>
+                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                            <Nav navbar>
+                            <NavItem>
+                                <NavLink className="nav-link"  to='/home'><span className="fa fa-home fa-lg"></span> Home</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to='/aboutus'><span className="fa fa-info fa-lg"></span> About Us</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link"  to='/menu'><span className="fa fa-list fa-lg"></span> Menu</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to='/contactus'><span className="fa fa-address-card fa-lg"></span> Contact Us</NavLink>
+                            </NavItem>
+                            </Nav>
+                        </Collapse>
                     </div>
                 </Navbar>
             </div>
