@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron } from 'reactstrap';
+import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron, Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 class Navigationbar extends Component {
@@ -54,9 +54,15 @@ class Navigationbar extends Component {
                             <NavItem>
                                 <NavLink className="nav-link" to='/contactus'><span className="fa fa-address-card fa-lg"></span> Contact Us</NavLink>
                             </NavItem>
+                            <Nav className="ml-auto" navbar>
+                                <NavItem>
+                                    <Button outline onClick={this.props.toggleModal}><span className="fa fa-sign-in fa-lg"></span> Login</Button>
+                                </NavItem>
+                            </Nav>
                             </Nav>
                         </Collapse>
                     </div>
+                    
                 </Navbar>
             </div>
 
