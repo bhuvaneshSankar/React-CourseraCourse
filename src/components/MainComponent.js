@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import MenuCard from './functionalComponents/Menu';
 //import DishDetail from './DishdetailComponent';
 import DishDetail from './functionalComponents/DishDetailFn';
+import {addComment} from '../redux/ActionCreators';
 
 import Home from './Home';
 import Header from './Header';
@@ -24,6 +25,9 @@ const mapStateToProps = state => {      // map the redux store's state into prop
         leaders: state.leaders
     }
 }
+const mapDispatchToProps = dispatch => ({
+    addComment:(dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+});
 class Main extends Component{
     constructor(props){
         super(props);
@@ -74,7 +78,9 @@ class Main extends Component{
             }
             return(
                 <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
-                comments = {result} />
+                  comments = {result}
+                  addComment={this.props.addComment}
+                />
             );
         }
         const AboutUs = () =>{
@@ -104,7 +110,7 @@ class Main extends Component{
         );
     }
 }
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
 
 /*
  constructor()
