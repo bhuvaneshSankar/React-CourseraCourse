@@ -66,9 +66,15 @@ class Main extends Component{
             );
         }
         const DishWithId = ({match}) => {
+            console.log('comments ' + this.props.comments);
+            let result = this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10));
+            console.log("results ");
+            for(let i=0; i<result.length; i++){
+                console.log(result[i]);
+            }
             return(
                 <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
-                comments = {this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))} />
+                comments = {result} />
             );
         }
         const AboutUs = () =>{
