@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import MenuCard from './functionalComponents/Menu';
 //import DishDetail from './DishdetailComponent';
 import DishDetail from './functionalComponents/DishDetailFn';
-import {addComment} from '../redux/ActionCreators';
+import {addComment, fetchDishes, fetchComments, fetchPromos} from '../redux/ActionCreators';
+import {actions} from 'react-redux-form';
 
 import Home from './Home';
 import Header from './Header';
@@ -22,11 +23,17 @@ const mapStateToProps = state => {      // map the redux store's state into prop
         dishes: state.dishes,
         comments: state.comments,
         promotions: state.promotions,
-        leaders: state.leaders
+        leaders: state.leaders,
+       
     }
 }
 const mapDispatchToProps = dispatch => ({
-    addComment:(dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+    addComment:(dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+    fetchDishes: () => { dispatch(fetchDishes()) },
+   // resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
+    resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
+    fetchComments: () => {dispatch(fetchComments())},
+    fetchPromos: () => {dispatch(fetchPromos())}
 });
 class Main extends Component{
     constructor(props){
@@ -38,7 +45,10 @@ class Main extends Component{
         console.log(`getDerivedStateFromProps() - MainComponent`);
     }
     componentDidMount(){
-        console.log(`componentDidMount - MC`);
+     //   console.log(`componentDidMount - MC`);
+        this.props.fetchDishes();
+        console.log('call to fetch comments ', this.props.fetchComments());
+        this.props.fetchPromos();
     }
     onDishSelect(dishId){
         this.setState({selectedDishId : dishId});
@@ -53,32 +63,37 @@ class Main extends Component{
         console.log('componentDidUpdate - MC');
     }
     render(){
-        console.log(`render - MC`);
-      /*  let selectedDish = null;
-        if(this.state.selectedDishId!=null){
-            selectedDish = this.state.dishes.filter( (dish)=>
-                dish.id === this.state.selectedDishId)[0];
-            
-        } */
         const HomePage = () => {
+            console.log("dishes in main component "+ this.props.dishes+" "+this.props.dishes.length);
+            for(var i=0; i<this.props.dishes.length; i++){
+                console.log(this.props.dishes[i]);
+            }
             return(
                 <Home 
-                    dish = {this.props.dishes.filter((dish) => dish.featured)[0]}
-                    promotion = {this.props.promotions.filter((promo)=>promo.featured)[0]}
+                    dish = {this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
+                    dishesLoading={this.props.dishes.isLoading}
+                    dishesErrMess={this.props.dishes.errMess}
+                    promotion = {this.props.promotions.promotions.filter((promo)=>promo.featured)[0]}
+                    promosLoading = {this.props.promotions.isLoading}
+                    promosErrMess = {this.props.promotions.errMess}
                     leader = {this.props.leaders.filter((leader) => leader.featured)[0]}
                 />
             );
         }
         const DishWithId = ({match}) => {
-            console.log('comments ' + this.props.comments);
-            let result = this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10));
+            console.log('props ', this.props);
+            console.log('comments ' + this.props.comments.comments);
+            let result = this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10));
             console.log("results ");
             for(let i=0; i<result.length; i++){
                 console.log(result[i]);
             }
             return(
-                <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
+                <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
+                  isLoading={this.props.dishes.isLoading}
+                  errMess={this.props.dishes.errMess}
                   comments = {result}
+                  commentsErrMess = {this.props.comments.errMess}
                   addComment={this.props.addComment}
                 />
             );
@@ -101,7 +116,7 @@ class Main extends Component{
                     <Route path='/home' component={HomePage} />
                     <Route exact path='/menu' component={() => <MenuCard dishes={this.props.dishes} />} />
                     <Route exact path='/menu/:dishId' component={DishWithId} />
-                    <Route exact path = '/contactus' component={Contact} />
+                    <Route exact path = '/contactus' component={()=> <Contact resetFeedbackForm={this.props.resetFeedbackForm}/>} />
                     <Route path = '/aboutus' component = {AboutUs} />
                     <Redirect to='/home' />   {/* default condition if the above two paths doesnt match*/}
                 </Switch>
