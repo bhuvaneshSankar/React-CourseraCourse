@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import MenuCard from './functionalComponents/Menu';
 //import DishDetail from './DishdetailComponent';
 import DishDetail from './functionalComponents/DishDetailFn';
-import {addComment, fetchDishes, fetchComments, fetchPromos} from '../redux/ActionCreators';
+import {postComment, fetchDishes, fetchComments, fetchPromos} from '../redux/ActionCreators';
 import {actions} from 'react-redux-form';
 
 import Home from './Home';
@@ -28,9 +28,8 @@ const mapStateToProps = state => {      // map the redux store's state into prop
     }
 }
 const mapDispatchToProps = dispatch => ({
-    addComment:(dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+    postComment:(dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
     fetchDishes: () => { dispatch(fetchDishes()) },
-   // resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
     resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
     fetchComments: () => {dispatch(fetchComments())},
     fetchPromos: () => {dispatch(fetchPromos())}
@@ -94,7 +93,7 @@ class Main extends Component{
                   errMess={this.props.dishes.errMess}
                   comments = {result}
                   commentsErrMess = {this.props.comments.errMess}
-                  addComment={this.props.addComment}
+                  postComment={this.props.postComment}
                 />
             );
         }
