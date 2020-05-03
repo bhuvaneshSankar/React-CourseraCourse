@@ -1,29 +1,11 @@
 import React, {Component} from 'react';
 import {Card, CardTitle, CardImg, CardImgOverlay, CardText, CardBody} from 'reactstrap';
-//import Dishdetail from './functionalComponents/DishDetailFn';
-//import Dishdetail from './DishdetailComponent';
 class MenuCard extends Component{
     constructor(props){
         super(props);
         this. state = {
             selectedDish: null
         }
-        console.log(`constructor - MenuComponentCard`);
-    }
-    getDerivedStateFromProps(){
-        console.log(`getDerivedStateFromProps() - MenuComponentCard`);
-    }
-    componentDidMount(){
-        console.log(`componentDidMount - MenuCard`);
-    }
-    shouldComponentUpdate(){
-        console.log(`shouldComponentUpdate - MenuCard`);
-    }
-    getSnapshotBeforeUpdate(){
-        console.log(`getSnapshotBeforeUpdate - MenuCard`);
-    }
-    componentDidUpdate(){
-        console.log('componentDidUpdate - MenuCard');
     }
     renderDish(dish){
         if(dish != null){
@@ -45,7 +27,6 @@ class MenuCard extends Component{
         }
     }
     render(){
-        console.log(`render - MenuCard`);
         const menu = this.props.dishes.map((dish)=>{
             return(
             <div key={dish.id} className="col-12 col-md-5 m-1">
@@ -63,9 +44,9 @@ class MenuCard extends Component{
                 <div className="row">
                     {menu}
                 </div>
-        {/*        <div>
+               <div>
                     <Dishdetail dish={this.state.selectedDish} />
-                </div>  */}
+                </div> 
             </div>
         );
     }

@@ -5,6 +5,8 @@ import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader} from 're
 import { Control, Errors, LocalForm } from 'react-redux-form';
 import {Loading} from '../LoadingComponent';
 import {baseUrl} from '../../shared/baseUrl'
+import {Fade} from 'react-animation-components';
+
 ;const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length<=len);
 const minLength = (len) => (val) => val && (val.length>=len);
@@ -15,7 +17,6 @@ class CommentForm extends Component{
         this.state={
           isModalOpen: false
         };
-  
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
@@ -75,9 +76,7 @@ class CommentForm extends Component{
                             <div className="form-group">
                                 <Label htmlFor="comment">Comment</Label>
                                 <Control.textarea model=".comment"  id="comment" name="comment" rows="6" className="form-control">
-
                                 </Control.textarea>
-                                
                             </div>
                             <Button type="submit" value="submit" color="primary">Submit</Button>
                         </LocalForm>
@@ -90,7 +89,7 @@ class CommentForm extends Component{
    function RenderDish({dish}){
         if(dish != null){
             return(
-                <Card>
+                    <Card>
                     <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name}/>
                     <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
@@ -114,10 +113,12 @@ class CommentForm extends Component{
         }
         const comment = comments.map((comment)=>{
             return(
+                <Fade in>
                 <li key={comment.id}>
                     <p>{comment.comment}</p>
                     <p>{`-- ${comment.author} , ${new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}`}</p>
                 </li>  
+                </Fade>
             )
         })
         return(
@@ -157,36 +158,31 @@ class CommentForm extends Component{
                 <div></div>
             );
         }
-    //    const dishDetails = renderDish(dish);
-    //    const dishComments = renderComments(props.comments);
         else if(props.dish!=null){
-        return(
-            <div className="container">
+            return(
+                <div className="container">
+                    <div className="row">
+                        <Breadcrumb>
+                            <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                        </Breadcrumb>
+                        <div className="col-12">
+                            <h3>{props.dish.name}</h3>
+                            <hr />
+                        </div>                
+                    </div>
                 <div className="row">
-                    <Breadcrumb>
-
-                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-                    </Breadcrumb>
-                    <div className="col-12">
-                        <h3>{props.dish.name}</h3>
-                        <hr />
-                    </div>                
-                </div>
-             <div className="row">
-                <div className=" col-12 col-md-5 m-1">
-                    
-                    <RenderDish dish={props.dish} />
-                </div>
-                <div className="col-12 col-md-5 m-1">
-                    <RenderComments comments={props.comments} postComment={props.postComment} dishId={props.dish.id}
-                    />
-                </div>
-            </div>  
-        </div>
-        );
+                    <div className=" col-12 col-md-5 m-1">
+                        <RenderDish dish={props.dish} />
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        <RenderComments comments={props.comments} postComment={props.postComment} dishId={props.dish.id}
+                        />
+                    </div>
+                </div>  
+            </div>
+            );
         }
     }  
-
 
 export default DishDetail;

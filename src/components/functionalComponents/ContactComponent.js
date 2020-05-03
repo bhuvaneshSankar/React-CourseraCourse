@@ -13,11 +13,8 @@ const minLength = (len) => (val) => val && (val.length>=len);
 const isNumber = (val) => !isNaN(Number(val));
 const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 class Contact extends Component{
-    
-    
     handleSubmit(values){
-        console.log('current state is : ' + JSON.stringify(values));
-        alert('current state is: '+JSON.stringify(values));
+        this.props.postFeedback(values);
         this.props.resetFeedbackForm();
     }
     
@@ -56,8 +53,8 @@ class Contact extends Component{
                             <a role="button" className="btn btn-info"><i className="fa fa-skype"></i> Skype</a>
                             <a role="button" className="btn btn-success" href="mailto:confusion@food.net"><i className="fa fa-envelope-o"></i> Email</a>
                         </div>
-                        </div>
                     </div>
+                </div>
                 <div className="row row-content">
                 <div className="col-12">
                    <h3>Send us your Feedback</h3>
@@ -189,11 +186,8 @@ class Contact extends Component{
                         </Form>
                  </div>
             </div>
-
-            
             </div>
         );
-        
     }
 }
 export default Contact;

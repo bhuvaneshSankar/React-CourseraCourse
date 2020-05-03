@@ -17,23 +17,7 @@ class Navigationbar extends Component {
           isNavOpen: !this.state.isNavOpen
         });
       }
-  /*   getDerivedStateFromProps() {
-        console.log(`getDerivedStateFromProps() - Navbar`);
-    }
-    componentDidMount() {
-        console.log(`componentDidMount - Nav`);
-    }
-    shouldComponentUpdate() {
-        console.log(`shouldComponentUpdate - Nav`);
-    }
-    getSnapshotBeforeUpdate() {
-        console.log(`getSnapshotBeforeUpdate - Nav`);
-    }
-    componentDidUpdate() {
-        console.log('componentDidUpdate - Nav');
-    }*/
     render() {
-        console.log(`render - Nav`);
         return (
             <div>
                 <Navbar dark expand="md">

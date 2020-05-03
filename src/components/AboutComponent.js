@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 import RenderLeader from './RenderLeader';
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
             <p>Leader {leader.name}</p>
         );
     });
-
     return(
         <div className="container">
             <div className="row">
@@ -66,6 +65,7 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
+
                         <RenderLeader leaders={props.leaders}/>
                     </Media>
                 </div>

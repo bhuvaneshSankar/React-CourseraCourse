@@ -60,10 +60,7 @@ class Contact extends Component{
         });
     }
     handleInputChange(event){
-        console.log("event " + event);
         const target = event.target;
-        console.log("target " + target);
-        console.log("type " + target.type);
         const value = target.type === 'checkbox' ? target.checked : target.value ;
         const name = target.name;
         this.setState({
@@ -71,7 +68,6 @@ class Contact extends Component{
         });
     }
     handleSubmit(event){
-        console.log('current state is : ' + JSON.stringify(this.state));
         alert('current state is: '+JSON.stringify(this.state));
         event.preventDefault();
     }
@@ -135,8 +131,7 @@ class Contact extends Component{
                                         onChange={this.handleInputChange} />
                                     <FormFeedback>{errors.firstname}</FormFeedback>
                              </Col>
-                         </FormGroup>
-                         
+                         </FormGroup> 
                          <FormGroup row>
                              <Label htmlFor="lastname" md={2}>Last Name</Label>
                              
@@ -216,12 +211,9 @@ class Contact extends Component{
                          </FormGroup>
                      </Form>
                  </div>
-            </div>
-
-            
+            </div>  
             </div>
         );
-        
     }
 }
 export default Contact;
